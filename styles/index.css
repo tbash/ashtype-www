@@ -1,0 +1,75 @@
+@tailwind preflight;
+@tailwind utilities;
+
+@keyframes bounceInUp {
+  from, 60%, 75%, 90%, to {
+    animation-timing-function: cubic-bezier(0.215, 0.610, 0.355, 1.000);
+  }
+
+  from {
+    opacity: 0;
+    transform: translate3d(0, 3000px, 0);
+  }
+
+  60% {
+    opacity: 1;
+    transform: translate3d(0, -20px, 0);
+  }
+
+  75% {
+    transform: translate3d(0, 10px, 0);
+  }
+
+  90% {
+    transform: translate3d(0, -5px, 0);
+  }
+
+  to {
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+@keyframes load8 {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+body {
+  color: config('colors.grey-darkest');
+}
+
+a {
+  text-decoration: none;
+  color: inherit
+}
+
+.bounce-in-up {
+  animation-name: bounceInUp;
+  animation-duration: 1s;
+  animation-fill-mode: both;
+}
+
+.loader,
+.loader:after {
+  border-radius: 50%;
+  width: 10em;
+  height: 10em;
+}
+
+.loader {
+  margin: 60px auto;
+  font-size: 10px;
+  position: relative;
+  text-indent: -9999em;
+  border-top: 1.1em solid config('colors.grey-lighter');
+  border-right: 1.1em solid config('colors.grey-lighter');
+  border-bottom: 1.1em solid config('colors.grey-lighter');
+  border-left: 1.1em solid config('colors.grey-dark');
+  transform: translateZ(0);
+  animation: load8 1.1s infinite linear;
+}
