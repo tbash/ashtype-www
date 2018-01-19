@@ -25,7 +25,7 @@ type Msg
 
 type Tab
     = About
-    | WhatWeDo
+    | Social
     | Contact
 
 
@@ -35,7 +35,7 @@ type Tab
 
 init : ( Model, Cmd Msg )
 init =
-    ( { tabs = SelectList.fromLists [ About ] WhatWeDo [ Contact ]
+    ( { tabs = SelectList.fromLists [ About ] Social [ Contact ]
       , itemList = Loading
       }
     , Request.Item.list
@@ -66,7 +66,7 @@ view : Model -> Html Msg
 view model =
     let
         email =
-            "hello@ashtype.com"
+            "info@ashtype.com"
     in
     div [ class "flex justify-center flex-col items-center m-8 bounce-in-up" ]
         [ img [ class " w-64", src "/media/logo.png" ] []
@@ -79,11 +79,11 @@ view model =
                 About ->
                     div []
                         [ span []
-                            [ text "blurb here" ]
+                            [ text "figuring things out." ]
                         ]
 
-                WhatWeDo ->
-                    viewWhatWeDo model.itemList
+                Social ->
+                    viewSocial model.itemList
 
                 Contact ->
                     div []
@@ -115,15 +115,15 @@ tabToString tab =
         About ->
             "ABOUT"
 
-        WhatWeDo ->
-            "WHAT WE DO"
+        Social ->
+            "SOCIAL"
 
         Contact ->
             "CONTACT"
 
 
-viewWhatWeDo : WebData (List Item) -> Html Msg
-viewWhatWeDo itemList =
+viewSocial : WebData (List Item) -> Html Msg
+viewSocial itemList =
     div [ class "flex justify-center", style [ ( "width", "64rem" ) ] ]
         [ itemList
             |> RemoteData.map
