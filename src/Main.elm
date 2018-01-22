@@ -99,7 +99,7 @@ viewTab position tab =
     li [ class "m-2" ]
         [ a
             [ href "javascript:void(0);"
-            , onClick (SelectTab tab)
+            , onClick <| SelectTab tab
             , classList
                 [ ( "p-4", True )
                 , ( "border-b", position == Selected )
@@ -124,21 +124,30 @@ tabToString tab =
 
 viewSocial : WebData (List Item) -> Html Msg
 viewSocial itemList =
-    div [ class "flex justify-center", style [ ( "width", "64rem" ) ] ]
-        [ itemList
-            |> RemoteData.map
-                (ul [ class "list-reset flex flex-wrap justify-around p-0" ]
-                    << List.map viewItem
-                )
-            |> RemoteData.withDefault (div [ class "loader" ] [])
+    div [ class "flex justify-center" ]
+        [ case itemList of
+            Success items ->
+                items
+                    |> List.map viewItem
+                    |> ul
+                        [ class "list-reset flex flex-wrap justify-around"
+                        , style [ ( "max-width", "64rem" ) ]
+                        ]
+
+            Loading ->
+                div [ class "loader" ] []
+
+            NotAsked ->
+                text ""
+
+            Failure _ ->
+                text ""
         ]
 
 
 viewItem : Item -> Html Msg
 viewItem item =
-    li
-        [ class "flex-initial h-64 rounded overflow-hidden shadow-lg m-4"
-        ]
+    li [ class "h-64 w-64 rounded overflow-hidden shadow-lg m-4" ]
         [ a [ href item.link, target "_blank" ]
             [ img [ class "h-64", src item.imgUrl ] []
             ]
